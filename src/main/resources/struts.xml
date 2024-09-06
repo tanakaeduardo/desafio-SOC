@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "https://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.action.extension" value="html" />
+    <constant name="struts.mapper.action.prefix.enabled" value="true" />
+
+    <package name="default" extends="struts-default" >
+    
+		<action name="index" class="org.apache.struts.crud.controller.ExameController">
+			<result name="success">/index.jsp</result>
+		</action>
+    
+		<action name="insertExame"  method="insertExame" class="org.apache.struts.crud.controller.ExameController">
+			<result name="success">/list.jsp</result>
+			<result name="input">/list.jsp</result>
+		</action>
+		
+		    
+		<action name="listExames"  method="listExames" class="org.apache.struts.crud.controller.ExameController">
+			<result name="success">/list.jsp</result>
+			<result name="input">/list.jsp</result>
+		</action>
+    
+    	<action name="updateExame"  method="updateExame" class="org.apache.struts.crud.controller.ExameController">
+			<result name="success">/edit.jsp</result>
+			<result name="input">/edit.jsp</result>
+		</action>
+    
+        <action name="insert">
+			<result name="success">/insert.jsp</result>
+		</action>
+		
+		<action name="list"  method="list" class="org.apache.struts.crud.controller.ExameController">
+			<result name="success">/list.jsp</result>
+		</action>
+		
+    	<action name="edit"  method="editExame" class="org.apache.struts.crud.controller.ExameController">
+			<result name="success">/edit.jsp</result>
+			<result name="input">/list.jsp</result>
+		</action>
+		
+		<action name="delete"  method="deleteExame" class="org.apache.struts.crud.controller.ExameController">
+			<result name="success">/list.jsp</result>
+			<result name="input">/list.jsp</result>
+		</action>
+	
+	
+	
+		<action name="insertFuncionario"  method="insertFuncionario" class="org.apache.struts.crud.controller.FuncionarioController">
+			<result name="success">/listFunc.jsp</result>
+			<result name="input">/listFunc.jsp</result>
+		</action>
+			    
+		<action name="listFuncionarios"  method="listFuncionarios" class="org.apache.struts.crud.controller.FuncionarioController">
+			<result name="success">/listFunc.jsp</result>
+			<result name="input">/listFunc.jsp</result>
+		</action>
+    
+    	<action name="updateFuncionario"  method="updateFuncionario" class="org.apache.struts.crud.controller.FuncionarioController">
+			<result name="success">/editFunc.jsp</result>
+			<result name="input">/editFunc.jsp</result>
+		</action>
+    
+        <action name="insertFunc">
+			<result name="success">/insertFunc.jsp</result>
+		</action>
+		
+		<action name="listFunc"  method="listFunc" class="org.apache.struts.crud.controller.FuncionarioController">
+			<result name="success">/listFunc.jsp</result>
+		</action>
+		
+    	<action name="editFunc"  method="editFuncionario" class="org.apache.struts.crud.controller.FuncionarioController">
+			<result name="success">/editFunc.jsp</result>
+			<result name="input">/listFunc.jsp</result>
+		</action>
+		
+		<action name="deleteFunc"  method="deleteFuncionario" class="org.apache.struts.crud.controller.FuncionarioController">
+			<result name="success">/listFunc.jsp</result>
+			<result name="input">/listFunc.jsp</result>
+		</action>
+		
+		
+		
+		<action name="insertExameRealizado"  method="insertExameRealizado" class="org.apache.struts.crud.controller.ExameRealizadoController">
+			<result name="success">/listEreal.jsp</result>
+			<result name="input">/listEreal.jsp</result>
+		</action>
+			    
+		<action name="listExameRealizados"  method="listExameRealizados" class="org.apache.struts.crud.controller.ExameRealizadoController">
+			<result name="success">/listEreal.jsp</result>
+			<result name="input">/listEreal.jsp</result>
+		</action>
+    
+    	<action name="updateExameRealizado"  method="updateExameRealizado" class="org.apache.struts.crud.controller.ExameRealizadoController">
+			<result name="success">/editEreal.jsp</result>
+			<result name="input">/editEreal.jsp</result>
+		</action>
+    
+        <action name="insertEreal">
+			<result name="success">/insertEreal.jsp</result>
+		</action>
+		
+		<action name="listEreal"  method="listEreal" class="org.apache.struts.crud.controller.ExameRealizadoController">
+			<result name="success">/listEreal.jsp</result>
+		</action>
+		
+    	<action name="editEreal"  method="editExameRealizado" class="org.apache.struts.crud.controller.ExameRealizadoController">
+			<result name="success">/editEreal.jsp</result>
+			<result name="input">/listEreal.jsp</result>
+		</action>
+		
+		<action name="deleteEreal"  method="deleteExameRealizado" class="org.apache.struts.crud.controller.ExameRealizadoController">
+			<result name="success">/listEreal.jsp</result>
+			<result name="input">/listEreal.jsp</result>
+		</action>
+		
+    </package>
+</struts>
