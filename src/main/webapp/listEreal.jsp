@@ -26,9 +26,23 @@
 <h1 align="center"><s:text name="Consulta de Exames Realizados"/></h1>
 <table border="1" >
         <s:form action="listExameRealizados"  method="post">
-	 		<s:textfield name="exameRealizado.cd_funcionario"  value=""  label="Codigo Funcionario" />
-			<s:textfield name="exameRealizado.cd_exame"  value=""  label="Codigo Exame" />
-<%--             <s:textfield name="exameRealizado.dt_realizacao" label="Data Realizacao" /> --%>
+<%-- 	 		<s:textfield name="exameRealizado.cd_funcionario"  value=""  label="Codigo Funcionario" /> --%>
+<%-- 			<s:textfield name="exameRealizado.cd_exame"  value=""  label="Codigo Exame" /> --%>
+
+			<s:select label="Funcionarios" 
+						list="funcionarioList"
+						listKey="cd_funcionario"
+			       		listValue="nm_funcionario"
+						value="exameRealizado.cd_funcionario"
+						name="exameRealizado.cd_funcionario" />
+						
+			<s:select label="Exames"
+						list="exameList"
+						listKey="cd_exame"
+			       		listValue="nm_exame"
+						name="exameRealizado.cd_exame" 
+						value="exameRealizado.cd_exame"/>
+    
             <s:submit value="Consultar"/>
         </s:form>
         </table>

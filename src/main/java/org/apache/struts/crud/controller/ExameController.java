@@ -21,6 +21,7 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class ExameController extends ActionSupport {
     
+	private static final long serialVersionUID = 1L;
 	private String ativo;
     private Exame exame = new Exame();
     private ExameService service = new ExameService();
@@ -46,6 +47,12 @@ public class ExameController extends ActionSupport {
 	}
 	public void setSm(String sm) {
 		this.sm = sm;
+	}
+	public String getAtivo() {
+		return ativo;
+	}
+	public void setAtivo(String ativo) {
+		this.ativo = ativo;
 	}
 	public List<Exame> getExameList() {
 		return exameList;
@@ -117,10 +124,10 @@ public class ExameController extends ActionSupport {
 	public String editExame() {
 		HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
 		int cd_exame = Integer.parseInt(request.getParameter("cd_exame"));
-		Exame exame;
 		try {
 			exame = service.buscarExame(cd_exame);
 			if(exame != null) {
+				ativo = exame.getIc_ativo()?"Ativo":"Inativo";
 				return SUCCESS;
 			} else {
 				return INPUT;

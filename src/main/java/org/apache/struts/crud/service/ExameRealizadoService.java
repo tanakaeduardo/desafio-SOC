@@ -3,7 +3,9 @@ package org.apache.struts.crud.service;
 import java.util.List;
 
 import org.apache.struts.crud.dao.ExameRealizadoDAO;
+import org.apache.struts.crud.entity.Exame;
 import org.apache.struts.crud.entity.ExameRealizado;
+import org.apache.struts.crud.entity.Funcionario;
 import org.apache.struts.crud.util.ConexaoFalhouException;
 import org.apache.struts.crud.util.RegraDeNegocioException;
 
@@ -27,21 +29,28 @@ public class ExameRealizadoService {
 		 return new ExameRealizadoDAO().save(exameRealizado);
 	}
 	
-	public ExameRealizado buscarExameRealizado(Integer cd_exameRealizado, String nm_exameRealizado ) throws ConexaoFalhouException {
-		ExameRealizado exameRealizado = new ExameRealizadoDAO().read(cd_exameRealizado, nm_exameRealizado);
+	public ExameRealizado buscarExameRealizado(Integer cd_exame, Integer cd_funcionario ) throws ConexaoFalhouException {
+		ExameRealizado exameRealizado = new ExameRealizadoDAO().read(cd_exame, cd_funcionario);
 		if(exameRealizado != null) {
 			return exameRealizado;
 		} else {
-			throw new RegraDeNegocioException("ExameRealizado não encontrado");
+			throw new RegraDeNegocioException("Exame realizado não encontrado");
 		}
 	}
 	
-	public boolean alterarExameRealizado(Integer cd_exameRealizado, String nm_exameRealizado) throws ConexaoFalhouException {
-		return new ExameRealizadoDAO().update(cd_exameRealizado, nm_exameRealizado);
+	public boolean alterarExameRealizado(ExameRealizado exameRealizado, Integer cd_exame) throws ConexaoFalhouException {
+		return new ExameRealizadoDAO().update(exameRealizado, cd_exame);
 	}
 	
-	public boolean apagarExameRealizado(Integer cd_exameRealizado) throws Exception {
-		return new ExameRealizadoDAO().delete(cd_exameRealizado);
+	public boolean apagarExameRealizado(Integer cd_exame, Integer cd_funcionario) throws Exception {
+		return new ExameRealizadoDAO().delete(cd_exame, cd_funcionario);
 	}
 	
+	public List<Funcionario> listarFuncionarios () throws ConexaoFalhouException{
+		return new ExameRealizadoDAO().funcionarioList();
+	}
+	
+	public List<Exame> listarExames () throws ConexaoFalhouException{
+		return new ExameRealizadoDAO().exameList();
+	}
 }

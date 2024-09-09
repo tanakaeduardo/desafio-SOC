@@ -103,7 +103,7 @@
 			<result name="success">/insertEreal.jsp</result>
 		</action>
 		
-		<action name="listEreal"  method="listEreal" class="org.apache.struts.crud.controller.ExameRealizadoController">
+		<action name="listEreal"  method="execute" class="org.apache.struts.crud.controller.ExameRealizadoController">
 			<result name="success">/listEreal.jsp</result>
 		</action>
 		

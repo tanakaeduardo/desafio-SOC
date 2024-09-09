@@ -25,19 +25,19 @@ public class FuncionarioDAO {
 	public List<Funcionario> list(Funcionario funcionario) throws ConexaoFalhouException{
 		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 		String sql = "SELECT * FROM funcionario where 1 = 1  ";
-		if(funcionario.getCd_funcionario() != 0)sql += ("AND cd_funcionario = ? ");
-		if(funcionario.getNm_funcionario() != null)sql += (" AND nm_funcionario like ('%?%') ");
+		if(funcionario.getCd_funcionario() != null && funcionario.getCd_funcionario() != 0)sql += ("AND cd_funcionario = ? ");
+		if(funcionario.getNm_funcionario() != null && !funcionario.getNm_funcionario().equals(""))sql += (" AND nm_funcionario like ? ");
 	
 		try  (
 	            Connection conn = ConnectionFactory.recuperarConexao();
 				PreparedStatement ps = conn.prepareStatement(sql);
 	        ) {
 				int i=1;
-				if(funcionario.getCd_funcionario() != 1) {
+				if(funcionario.getCd_funcionario() != null && funcionario.getCd_funcionario() != 0) {
 					ps.setInt(i, funcionario.getCd_funcionario());
 					i++;
 				}
-				if(funcionario.getNm_funcionario() != null) ps.setString(i, funcionario.getNm_funcionario());
+				if(funcionario.getNm_funcionario() != null && !funcionario.getNm_funcionario().equals("")) ps.setString(i, "%"+funcionario.getNm_funcionario()+"%");
 	
 			    try (ResultSet rs = ps.executeQuery()){
 				    while (rs.next()) {
@@ -52,15 +52,15 @@ public class FuncionarioDAO {
 	}
 	
 	
-	public Funcionario read(Integer cd_funcionario) throws ConexaoFalhouException{
-		Funcionario funcionario = new Funcionario();
+	public Funcionario read(int cd_funcionario) throws ConexaoFalhouException{
+		Funcionario funcionario = null;
 		String sql = "SELECT * FROM funcionario where cd_funcionario = ? ";
 				
 		try  (
 	            Connection conn = ConnectionFactory.recuperarConexao();
 				PreparedStatement ps = conn.prepareStatement(sql);
 	        ) {
-			ps.setInt(1, funcionario.getCd_funcionario());
+			ps.setInt(1, cd_funcionario);
 		    try (ResultSet rs = ps.executeQuery()){ 
 			    while (rs.next()) {
 			    	funcionario = new Funcionario(rs.getInt(1), rs.getString(2));
@@ -73,17 +73,15 @@ public class FuncionarioDAO {
 	}
 	
 	public boolean save(Funcionario funcionario) throws ConexaoFalhouException {
-        String sql = "INSERT INTO funcionario (cd_funcionario, nm_funcionario)" +
-                "VALUES (?, ?)";
+        String sql = "INSERT INTO funcionario ( nm_funcionario) VALUES ( ?)";
 
 		try  (
 	            Connection conn = ConnectionFactory.recuperarConexao();
 				PreparedStatement ps = conn.prepareStatement(sql);
 	        ) {
 
-            ps.setInt(1, funcionario.getCd_funcionario());
-            ps.setString(2, funcionario.getNm_funcionario());
-            boolean status = ps.execute();
+            ps.setString(1, funcionario.getNm_funcionario());
+            boolean status = ps.executeUpdate() == 1;
 		    return status;
         } catch (SQLException e) {
             throw new ConexaoFalhouException(e);
@@ -99,7 +97,7 @@ public class FuncionarioDAO {
 	        ) {
             ps.setString(1, nm_funcionario);
             ps.setInt(2, cd_funcionario);
-            boolean status = ps.execute();
+            boolean status = ps.executeUpdate() == 1;
 
 		    return status;
         } catch (SQLException e) {
@@ -114,7 +112,7 @@ public class FuncionarioDAO {
 				PreparedStatement ps = conn.prepareStatement(sql);
 	        ) {
             ps.setInt(1, cd_funcionario);
-            boolean status = ps.execute();
+            boolean status = ps.executeUpdate() == 1;
             
 		    return status;
         } catch (SQLException e) {

@@ -28,7 +28,7 @@ public class ExameDAO {
     	List<Exame> exames = new ArrayList<Exame>();
 		String sql = "SELECT * FROM exame  where 1 = 1 ";
 		if(exame.getCd_exame() != 0) sql += ("AND cd_exame = ? ");
-		if(exame.getNm_exame() != null) sql += (" AND nm_exame like ('%?%') ");
+		if(exame.getNm_exame() != null && !exame.getNm_exame().equals("")) sql += (" AND nm_exame like ('%?%') ");
 		if(exame.getIc_ativo() != null) sql += (" AND ic_ativo = ? ");
 
 		sql += ("  limit 10 ");
@@ -38,11 +38,11 @@ public class ExameDAO {
 				PreparedStatement ps = conn.prepareStatement(sql);
 	        ) {
 			int i=1;
-			if(exame.getCd_exame() != 1) {
+			if(exame.getCd_exame() != 0) {
 				ps.setInt(i, exame.getCd_exame());
 				i++;
 			}
-			if(exame.getNm_exame() != null) {
+			if(exame.getNm_exame() != null && !exame.getNm_exame().equals("")) {
 				ps.setString(i, exame.getNm_exame());
 				i++;
 			}
@@ -96,8 +96,8 @@ public class ExameDAO {
     }
     
     public boolean save(Exame exame) throws ConexaoFalhouException {
+    	int status;
     	String sql = "INSERT INTO exame (nm_exame, ic_ativo, ds_detalhe_exame, ds_detalhe_exame1) VALUES (?,?,?,?)";
-    	boolean status;
 		try  (
 	            Connection conn = ConnectionFactory.recuperarConexao();
 				PreparedStatement ps = conn.prepareStatement(sql);
@@ -106,16 +106,16 @@ public class ExameDAO {
             ps.setBoolean(2, exame.getIc_ativo());
             ps.setString(3, exame.getDs_detalhe_exame());
             ps.setString(4, exame.getDs_detalhe_exame1());
+            status = ps.executeUpdate();
 
-            status = ps.execute();
 		} catch (SQLException e) {
 	           throw new ConexaoFalhouException(e);
 		}
-		return status;
+		return status ==1 ;
     }
     
     public boolean update(Exame exame) throws ConexaoFalhouException {
-    	boolean status;
+    	int status;
 		String sql = "UPDATE exame SET nm_exame = ? , ic_ativo = ? , ds_detalhe_exame = ? , ds_detalhe_exame1 = ? WHERE cd_exame = ? ";
 		
 		try  (
@@ -127,16 +127,16 @@ public class ExameDAO {
             ps.setString(3, exame.getDs_detalhe_exame());
             ps.setString(4, exame.getDs_detalhe_exame1());
             ps.setInt(5, exame.getCd_exame());
-            status = ps.execute();
+            status = ps.executeUpdate();
 	
 		} catch (SQLException e) {
 	           throw new ConexaoFalhouException(e);
 		}
-		return status;
+		return status ==1 ;
     }
     
     public boolean delete(Integer cd_exame) throws ConexaoFalhouException {
-    	boolean status;
+    	int status;
     	String sql = "DELETE FROM exame WHERE cd_exame = ? ";
 		
 		try  (
@@ -144,11 +144,11 @@ public class ExameDAO {
 				PreparedStatement ps = conn.prepareStatement(sql);
 	        ) {
             ps.setInt(1, cd_exame);
-            status = ps.execute();
+            status = ps.executeUpdate();
 	
 		} catch (SQLException e) {
 	           throw new ConexaoFalhouException(e);
 		}
-		return status;
+		return status ==1 ;
     }
 }
